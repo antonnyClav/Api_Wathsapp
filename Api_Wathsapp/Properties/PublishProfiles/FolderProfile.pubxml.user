@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>G:\comparto\ws</_PublishTargetUrl>
+    <History>True|2024-10-17T03:34:16.5205677Z;True|2024-10-15T15:41:47.1375422-03:00;True|2024-10-15T15:40:51.8721144-03:00;True|2024-10-08T20:50:43.2145782-03:00;</History>
+  </PropertyGroup>
+</Project>
