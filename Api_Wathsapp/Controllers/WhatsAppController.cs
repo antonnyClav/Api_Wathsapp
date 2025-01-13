@@ -1,15 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using Api_Wathsapp.Models;
-using Api_Wathsapp.Models.template;
-using Newtonsoft.Json;
-using Api_Wathsapp.Util.Interfaces;
+using Services.Interfaces;
+using Data.Entities;
+using Data.DTO;
 
 // ngrok http 2878 --host-header=localhost:2878 --region us  
 // ngrok http https://localhost:344
@@ -19,60 +14,42 @@ namespace Api_Wathsapp.Controllers
     [ApiController]
     public class WhatsAppController: ControllerBase
     {
-        private readonly ApplicationDbContext context;
-        private readonly ILoginService logService;
-        private string tokenApi = "BEW.PPASTAHWGNITURCER";
-
-        public WhatsAppController(ApplicationDbContext context, ILoginService _logService)
+        private readonly ILoginService _logService;
+        private readonly IWhatsAppService _WhatsAppService;
+        
+        public WhatsAppController(ILoginService logService, IWhatsAppService whatsAppService)
         {
-            this.context = context;
-            this.logService = _logService;
-
-            Parametros parametro = context.Parametros.Where(x => x.Codigo == "tokenApiWSOvidio" && x.BajaFecha == null).FirstOrDefault();
-            this.tokenApi = parametro.Valor;
-            parametro = null;
+            _logService = logService;
+            _WhatsAppService = whatsAppService;
         }
 
         // GET api/Whatsapp
         [Route("GetAll")]
         [HttpGet]
-        public ActionResult<IEnumerable<MensajesWhatsapp>> GetAll()
+        public async Task<ActionResult<ResponseDTO<List<MensajesWhatsapp>>>> GetAll()
         {
-            try
+            var reply = await _WhatsAppService.GetAll();
+            if (reply != null)
             {
-                logService.Log(0, "WebApi", "Whatsapp INICIO GetAll()", "I");
-                return context.MensajesWhatsapps.Where(x => x.BajaFecha == null).ToList();
+                return Ok(new ResponseDTO<List<MensajesWhatsapp>> { status = Data.Enum.Status.OK, data = reply });
             }
-            catch (Exception ex)
-            {
-                logService.Log(0, "WebApi", "Whatsapp ERROR GetAll() " + ex.Message + "....." + ex.InnerException, "E");
-                return BadRequest(ModelState);
-            }
-            finally
-            {
-                logService.Log(0, "WebApi", "Whatsapp FIN GetAll()", "F");
-            }
+            return NotFound(new ResponseDTO<List<MensajesWhatsapp>> { status = Data.Enum.Status.NOTFOUND, messages = "No se encontraron datos" });
+
         }
 
         // GET api/Whatsapp/1126432987
         [Route("GetByTelefono/{Telefono}")]
         [HttpGet]
-        public ActionResult<IEnumerable<MensajesWhatsapp>> GetByTelefono(string Telefono)
+        public async Task<ActionResult<ResponseDTO<List<MensajesWhatsapp>>>> GetByTelefono(string Telefono)
         {
-            try
+            _logService.Log(0, "WebApi", "Whatsapp INI GetByTelefono() Telefono: " + Telefono, "G");
+            var reply = await _WhatsAppService.GetByTelefono(Telefono);
+            if (reply != null)
             {
-                logService.Log(0, "WebApi", "Whatsapp INICIO GetByTelefono(" + Telefono + ")", "I");
-                return context.MensajesWhatsapps.Where(x => x.Remitente.Contains(Microsoft.VisualBasic.Strings.Right(Telefono, 8)) || x.Destinatario.Contains(Microsoft.VisualBasic.Strings.Right(Telefono, 8))).OrderBy(x=> x.AltaFecha).ToList();
+                _logService.Log(0, "WebApi", "Whatsapp INI GetByTelefono() reply: " + System.Text.Json.JsonSerializer.Serialize(reply), "I");
+                return Ok(new ResponseDTO<List<MensajesWhatsapp>> { status = Data.Enum.Status.OK, data = reply });
             }
-            catch (Exception ex)
-            {
-                logService.Log(0, "WebApi", "Whatsapp ERROR GetByTelefono(Telefono) " + ex.Message + "....." + ex.InnerException, "E");
-                return BadRequest(ModelState);
-            }
-            finally
-            {
-                logService.Log(0, "WebApi", "Whatsapp FIN GetByTelefono(Telefono)", "F");
-            }
+            return NotFound(new ResponseDTO<List<MensajesWhatsapp>> { status = Data.Enum.Status.NOTFOUND, messages = "Error al obtener el telefono" }); 
         }
 
         [HttpPost]
@@ -81,34 +58,20 @@ namespace Api_Wathsapp.Controllers
         {
             try
             {
-                logService.Log(0, "WebApi", "Whatsapp INI EnviarMensaje() entry: " + System.Text.Json.JsonSerializer.Serialize(entry), "G");
-                //PARAMETROS          
-                Parametros parametro = context.Parametros.Where(x => x.Codigo == "tokenMeta" && x.BajaFecha == null).FirstOrDefault();
-                string tokenMeta = parametro.Valor;
+                _logService.Log(0, "WebApi", "Whatsapp INI EnviarMensaje() entry: " + System.Text.Json.JsonSerializer.Serialize(entry), "G");
+                var reply = await _WhatsAppService.EnviarMensaje(entry);
+                if (reply != null)
+                {
+                    _logService.Log(0, "WebApi", "Whatsapp INI EnviarMensaje() reply: " + System.Text.Json.JsonSerializer.Serialize(reply), "I");
+                    return Ok(reply);
+                }
 
-                parametro = context.Parametros.Where(x => x.Codigo == "urlMeta" && x.BajaFecha == null).FirstOrDefault();
-                string urlMeta = parametro.Valor;
-                parametro = null;
-
-                var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, urlMeta);
-                request.Headers.Add("Authorization", "Bearer " + tokenMeta);
-                var content = new StringContent(JsonConvert.SerializeObject(entry), null, "application/json");
-                request.Content = content;
-                var response = await client.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                //return await response.Content.ReadAsStreamAsync();
-                var responseOUT = new HttpResponseMessage(response.StatusCode);
-
-                Mensajes dat = new Mensajes(context);
-                //INSERTAMOS LOS DATOS RECIBIDOS
-                dat.InsertarMensaje(false, entry.text.body, "", entry.to);
-
-                return responseOUT;
+                return new BadRequestObjectResult(new ResponseDTO<object> { status = Data.Enum.Status.NOTFOUND, messages = "El envio del mensaje no arrojo resultados." });                
+                
             }
             catch (Exception ex)
             {
-                logService.Log(0, "WebApi", "Whatsapp ERROR EnviarMensaje() " + ex.Message + "....." + ex.InnerException, "E");
+                _logService.Log(0, "WebApi", "Whatsapp ERROR EnviarMensaje() " + ex.Message + "....." + ex.InnerException, "E");
                 var error = new { code = 444, message = "Error al enviar el mensaje." };
                 return BadRequest(error);
             }
@@ -121,34 +84,20 @@ namespace Api_Wathsapp.Controllers
         {
             try
             {
-                logService.Log(0, "WebApi", "Whatsapp INI InciarCharla() entry: " + System.Text.Json.JsonSerializer.Serialize(entry), "G");
+                _logService.Log(0, "WebApi", "Whatsapp INI InciarCharla() entry: " + System.Text.Json.JsonSerializer.Serialize(entry), "G");
 
-                //PARAMETROS          
-                Parametros parametro = context.Parametros.Where(x => x.Codigo == "tokenMeta" && x.BajaFecha == null).FirstOrDefault();
-                string tokenMeta = parametro.Valor;
+                var reply = await _WhatsAppService.InciarCharla(entry);
+                if (reply != null)
+                {
+                    _logService.Log(0, "WebApi", "Whatsapp INI InciarCharla() reply: " + System.Text.Json.JsonSerializer.Serialize(reply), "I");
+                    return Ok(reply);
+                }
 
-                parametro = context.Parametros.Where(x => x.Codigo == "urlMeta" && x.BajaFecha == null).FirstOrDefault();
-                string urlMeta = parametro.Valor;
-                parametro = null;
-
-                var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, urlMeta);
-                request.Headers.Add("Authorization", "Bearer " + tokenMeta);
-                var content = new StringContent(JsonConvert.SerializeObject(entry), null, "application/json");
-                request.Content = content;
-                var response = await client.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                //return await response.Content.ReadAsStreamAsync();
-                var responseOUT = new HttpResponseMessage(response.StatusCode);
-                Mensajes dat = new Mensajes(context);
-                //INSERTAMOS LOS DATOS RECIBIDOS                
-                dat.InsertarMensaje(false, entry.template.name, "", entry.to);
-
-                return responseOUT;
+                return new BadRequestObjectResult(new ResponseDTO<object> { status = Data.Enum.Status.NOTFOUND, messages = "La charla inicial no arrojo resultados." });
             }
             catch (Exception ex)
             {
-                logService.Log(0, "WebApi", "Whatsapp ERROR InciarCharla() " + ex.Message + "....." + ex.InnerException, "E");
+                _logService.Log(0, "WebApi", "Whatsapp ERROR InciarCharla() " + ex.Message + "....." + ex.InnerException, "E");
                 var error = new { code = 444, message = "Error al enviar el mensaje." };
                 return BadRequest(error);
             }
@@ -165,23 +114,8 @@ namespace Api_Wathsapp.Controllers
             [FromQuery(Name = "hub.verify_token")] string verify_token
         )
         {
-            try
-            {
-                //SI EL TOKEN ES hola (O EL QUE COLOQUEMOS EN FACEBOOK)
-                if (verify_token.Equals(tokenApi))
-                {
-                    return challenge;
-                }
-                else
-                {
-                    return "TOKEN INVALIDO";
-                }
-            }
-            catch (Exception ex)
-            {
-                logService.Log(0, "WebApi", "Whatsapp ERROR Webhook() " + ex.Message + "....." + ex.InnerException, "E");
-                return "TOKEN INVALIDO";
-            }            
+            var reply = _WhatsAppService.Webhook(mode, challenge, verify_token);            
+            return reply;                        
         }
 
         //RECIBIMOS LOS DATOS DE VIA POST
@@ -193,34 +127,20 @@ namespace Api_Wathsapp.Controllers
         {
             try
             {
-                logService.Log(0, "WebApi", "Whatsapp INI RecibirMensaje() entry: " + System.Text.Json.JsonSerializer.Serialize(entry), "G");
-                var response = new HttpResponseMessage(HttpStatusCode.OK);
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+                _logService.Log(0, "WebApi", "Whatsapp INI RecibirMensaje() entry: " + System.Text.Json.JsonSerializer.Serialize(entry), "G");
 
-                //SI NO HAY MENSAJES RETORNAMOS UN OK            
-                if (entry.entry[0].changes[0].value.messages == null) return response;
-
-                //EXTRAEMOS EL MENSAJE RECIBIDO
-                string mensaje_recibido = "";
-                if (entry.entry[0].changes[0].value.messages[0].text != null)
+                var reply = _WhatsAppService.RecibirMensaje(entry);
+                if (reply != null)
                 {
-                    mensaje_recibido = entry.entry[0].changes[0].value.messages[0].text.body;
+                    _logService.Log(0, "WebApi", "Whatsapp INI RecibirMensaje() reply: " + System.Text.Json.JsonSerializer.Serialize(reply), "I");
+                    return Ok(reply);
                 }
-                //EXTRAEMOS EL ID UNICO DEL MENSAJE
-                string id_wa = entry.entry[0].changes[0].value.messages[0].id;
-                //EXTRAEMOS EL NUMERO DE TELEFONO DEL CUAL RECIBIMOS EL MENSAJE
-                string telefono_wa = entry.entry[0].changes[0].value.messages[0].from;
-                //INICIALIZAMOS LA CONEXION A LA BD
-                Mensajes dat = new Mensajes(context);
-                //INSERTAMOS LOS DATOS RECIBIDOS
-                dat.InsertarMensaje(true, mensaje_recibido, id_wa, telefono_wa);
 
-                //SI NO HAY ERROR RETORNAMOS UN OK            
-                return response;
+                return new BadRequestObjectResult(new ResponseDTO<object> { status = Data.Enum.Status.NOTFOUND, messages = "La charla inicial no arrojo resultados." });
             }
             catch (Exception ex)
             {
-                logService.Log(0, "WebApi", "Whatsapp ERROR RecibirMensaje() " + ex.Message + "....." + ex.InnerException, "E");
+                _logService.Log(0, "WebApi", "Whatsapp ERROR RecibirMensaje() " + ex.Message + "....." + ex.InnerException, "E");
                 var error = new { code = 444, message = "Error al recibir el mensaje." };
                 return BadRequest(error);
             }

@@ -1,22 +1,17 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Api_Wathsapp.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Api_Wathsapp.Util.Implementation;
-using Api_Wathsapp.Util.Interfaces;
+using Services.Interfaces;
+using Services.Implementation;
+using Data.Context;
 
 namespace Api_Wathsapp
 {
@@ -87,6 +82,7 @@ namespace Api_Wathsapp
 
             //Registramos las interfaces
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IWhatsAppService, WhatsAppService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

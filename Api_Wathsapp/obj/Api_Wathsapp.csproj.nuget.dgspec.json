@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\anto_.DESKTOP-V4B4DA0\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\Api_Wathsapp.csproj": {}
+    "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\Api_Wathsapp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\anto_.DESKTOP-V4B4DA0\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\Api_Wathsapp.csproj": {
+    "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\Api_Wathsapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\anto_.DESKTOP-V4B4DA0\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\Api_Wathsapp.csproj",
+        "projectUniqueName": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\Api_Wathsapp.csproj",
         "projectName": "Api_Wathsapp",
-        "projectPath": "C:\\Users\\anto_.DESKTOP-V4B4DA0\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\Api_Wathsapp.csproj",
-        "packagesPath": "C:\\Users\\anto_.DESKTOP-V4B4DA0\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\anto_.DESKTOP-V4B4DA0\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\obj\\",
+        "projectPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\Api_Wathsapp.csproj",
+        "packagesPath": "C:\\Users\\antx\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Api_Wathsapp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\anto_.DESKTOP-V4B4DA0\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\antx\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,20 +26,32 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Data\\Data.csproj": {
+                "projectPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Data\\Data.csproj"
+              },
+              "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Services\\Services.csproj": {
+                "projectPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Services\\Services.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net5.0": {
@@ -51,16 +62,6 @@
               "version": "[5.0.10, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
-              "target": "Package",
-              "version": "[5.0.10, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[5.0.10, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
               "target": "Package",
               "version": "[5.0.10, )"
             },
@@ -75,7 +76,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -87,7 +89,153 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Data\\Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Data\\Data.csproj",
+        "projectName": "Data",
+        "projectPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\antx\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\antx\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Services\\Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Services\\Services.csproj",
+        "projectName": "Services",
+        "projectPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Services\\Services.csproj",
+        "packagesPath": "C:\\Users\\antx\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Services\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\antx\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Data\\Data.csproj": {
+                "projectPath": "C:\\Users\\antx\\source\\repos\\Api_Wathsapp\\Data\\Data.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,16 @@
+C:\Users\antx\source\repos\Api_Wathsapp\Services\bin\Debug\net5.0\Services.deps.json
+C:\Users\antx\source\repos\Api_Wathsapp\Services\bin\Debug\net5.0\Services.dll
+C:\Users\antx\source\repos\Api_Wathsapp\Services\bin\Debug\net5.0\Services.pdb
+C:\Users\antx\source\repos\Api_Wathsapp\Services\bin\Debug\net5.0\Data.dll
+C:\Users\antx\source\repos\Api_Wathsapp\Services\bin\Debug\net5.0\Data.pdb
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.csproj.AssemblyReference.cache
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.AssemblyInfoInputs.cache
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.AssemblyInfo.cs
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.csproj.CoreCompileInputs.cache
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.sourcelink.json
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.csproj.Up2Date
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.dll
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\refint\Services.dll
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\Services.pdb
+C:\Users\antx\source\repos\Api_Wathsapp\Services\obj\Debug\net5.0\ref\Services.dll
